@@ -48,7 +48,7 @@ Create a `.env` file and add the following:
 MYSQL_HOST=your_mysql_host
 MYSQL_USER=your_mysql_user
 MYSQL_PASSWORD=your_mysql_password
-MYSQL_DATABASE=pokemon_db
+MYSQL_DATABASE=your_db_name
 MONGO_URI=mongodb+srv://your_mongo_connection
 SECRET_KEY=your_secret_key
 ```
@@ -59,7 +59,7 @@ SECRET_KEY=your_secret_key
 ### 1. Web Scraping Pokémon Data
 Run the web scraping script to collect Pokémon data from selected websites.
 ```bash
-python scrape_data.py
+python "name of your script".py
 ```
 This script will:
 - Extract Pokémon names, types, images, and descriptions.
@@ -67,7 +67,7 @@ This script will:
 
 ### 2. Fetch Additional Data via PokéAPI
 ```bash
-python fetch_pokeapi_data.py
+python "name of your script".py
 ```
 This script will:
 - Retrieve Pokémon abilities and moves from the PokéAPI.
