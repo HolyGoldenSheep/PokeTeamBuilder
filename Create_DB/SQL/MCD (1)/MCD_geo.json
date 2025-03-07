@@ -1,0 +1,31 @@
+{
+  "width": 477,
+  "height": 237,
+  "cx": [
+    [ "TYPES", 49 ],
+    [ "ASSOCIER_1", 165 ],
+    [ "POKEMON", 286 ],
+    [ "ASSOCIER_3", 415 ],
+    [ "ABILITIES", 165 ],
+    [ "ASSOCIER_2", 286 ],
+    [ "MOVES", 415 ]
+  ],
+  "cy": [
+    [ "TYPES", 68 ],
+    [ "ASSOCIER_1", 68 ],
+    [ "POKEMON", 68 ],
+    [ "ASSOCIER_3", 68 ],
+    [ "ABILITIES", 177 ],
+    [ "ASSOCIER_2", 177 ],
+    [ "MOVES", 177 ]
+  ],
+  "shift": [
+    [ "ASSOCIER_1,POKEMON,0", 0 ],
+    [ "ASSOCIER_1,TYPES,0", 0 ],
+    [ "ASSOCIER_3,POKEMON,0", 0 ],
+    [ "ASSOCIER_3,MOVES,0", 0 ],
+    [ "ASSOCIER_2,POKEMON,0", 0 ],
+    [ "ASSOCIER_2,ABILITIES,0", 0 ]
+  ],
+  "ratio": []
+}

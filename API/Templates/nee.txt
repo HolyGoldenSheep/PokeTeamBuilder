@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokémon Search</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f0f0;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+        header {
+            background-color: #ffcb05;
+            padding: 20px;
+            color: #3b4b45;
+            font-size: 2em;
+            font-weight: bold;
+        }
+        .container {
+            margin: 20px auto;
+            max-width: 800px;
+        }
+        .search-container {
+            margin: 20px 0;
+        }
+        input[type="text"] {
+            padding: 10px;
+            font-size: 1em;
+            width: 60%;
+            border: 2px solid #3b4b45;
+            border-radius: 5px;
+            outline: none;
+        }
+        button {
+            padding: 10px 15px;
+            font-size: 1em;
+            background-color: #3b4b45;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #2a2d2b;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        img {
+            max-width: 200px;
+        }
+        .types, .abilities, .moves {
+            list-style: none;
+            padding: 0;
+        }
+        .types li, .abilities li, .moves li {
+            display: inline-block;
+            margin: 5px;
+            padding: 5px 10px;
+            border-radius: 5px;
+            background-color: #ffcb05;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        Pokémon Search
+    </header>
+    <div class="container">
+        <!-- Token Input and Button -->
+        <div class="search-container">
+            <input type="text" id="password" placeholder="Enter password for token" />
+            <button onclick="generateToken()">Generate Token</button>
+        </div>
+
+        <!-- Pokémon Search -->
+        <div class="search-container">
+            <input type="text" id="pokemon-name" placeholder="Enter Pokémon name..." />
+            <button onclick="fetchPokemon()">Search</button>
+        </div>
+
+        <!-- Result Display -->
+        <div id="result" class="result"></div>
+    </div>
+
+    <script>
+        let jwtToken = ""; // Variable to store the JWT token
+
+        // Function to generate a JWT token
+        async function generateToken() {
+            const password = document.getElementById('password').value;
+            const response = await fetch("/token", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    password: password, // The user-supplied password
+                    duration: 3600 // Token valid for 1 hour
+                })
+            });
+
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = ''; // Clear previous results
+
+            if (response.ok) {
+                const data = await response.json();
+                jwtToken = data.token;  // Store the token in the variable
+                resultDiv.innerHTML = `<p>Token generated successfully!</p>`;
+            } else {
+                const error = await response.json();
+                resultDiv.innerHTML = `<p>${error.detail}</p>`;
+            }
+        }
+
+        // Function to fetch Pokémon data
+        async function fetchPokemon() {
+            if (!jwtToken) {
+                alert("Please generate a token first.");
+                return;
+            }
+
+            const name = document.getElementById('pokemon-name').value;
+            const response = await fetch(`/pokemon?name=${name}`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${jwtToken}`
+                }
+            });
+
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = ''; // Clear previous results
+
+            if (response.ok) {
+                const data = await response.json();
+                const pokemon = data.pokemon;
+
+                resultDiv.innerHTML = `
+                    <h2>${pokemon.name} (#${pokemon.pokedex_number})</h2>
+                    <img src="${pokemon.image}" alt="${pokemon.name}" />
+                    <p>${pokemon.description}</p>
+                    <h3>Types:</h3>
+                    <ul class="types">${pokemon.types.map(type => `<li>${type}</li>`).join('')}</ul>
+                    <h3>Abilities:</h3>
+                    <ul class="abilities">${pokemon.abilities.map(ability => `<li>${ability}</li>`).join('')}</ul>
+                    <h3>Moves:</h3>
+                    <ul class="moves">${pokemon.moves.map(move => `<li>${move}</li>`).join('')}</ul>
+                `;
+            } else {
+                const error = await response.json();
+                resultDiv.innerHTML = `<p>${error.detail}</p>`;
+            }
+        }
+    </script>
+</body>
+</html>

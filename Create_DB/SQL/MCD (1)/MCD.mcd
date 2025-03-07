@@ -1,0 +1,10 @@
+TYPES: type_id, type_name
+ASSOCIER_1, NN POKEMON, 1N TYPES: Has
+POKEMON: pokemon_id, pokedex, name, height, weight
+ASSOCIER_3, NN POKEMON, NN MOVES: Has
+
+:
+ABILITIES: ability_id, ability_name
+ASSOCIER_2, 1N POKEMON, 1N ABILITIES: Has
+MOVES: move_id, move_name, move_power, move_accuracy
+

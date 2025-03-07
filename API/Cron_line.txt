@@ -1,0 +1,4 @@
+sudo service cron start
+crontab -e
+0 0 31 12 * Pokemon bloc one project/Script/pokemon_scraper.py
+0 0 31 12 * Pokemon bloc one project/Script/merged_scripts_prep_insert.py
